@@ -5,6 +5,7 @@ struct STD{
 int deleted ;//if true 1
 int id ;
 char name[30] ;
+int n ;
 };
 struct STD s1 = {0,2012,"Mohamed Adam"};
 struct STD s2 = {1,2013,"Reham elhadi"};
