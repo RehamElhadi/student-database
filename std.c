@@ -8,7 +8,7 @@ main(){
 	int id  ;
 	char name[30] ;
 	char degree[2] ;
-	}student;
+	}student,std;
 	FILE *fp ;
 	FILE *temp ;
 	int id = 1 ;
@@ -34,7 +34,8 @@ main(){
 					break ;
 			case 2 ://student.id = id ; 
 					id++;
-					fp = fopen("myfile.txt" ,"a");
+					fp = fopen("myfile.txt" ,"r");
+					temp = fopen("temp","w");
 					//fseek(fp,0,SEEK_END);
 					printf("student id :");
 					scanf("%d",&student.id);
@@ -43,8 +44,25 @@ main(){
 					printf("student degree in database :");
 					scanf("%s",student.degree);
 					student.deleted = 0 ;
-					fprintf( fp,"%d %d %s %s\n",student.id,student.deleted,student.name,student.degree );
+					while(!feof(fp)){	
+					fscanf(fp,"%d %d %s %s\n",&std.id,&std.deleted,std.name,std.degree);
+					if(std.id < student.id)
+					fprintf( temp,"%d %d %s %s\n",&std.id,&std.deleted,std.name,std.degree);
+					else
+					fprintf( temp,"%d %d %s %s\n",student.id,student.deleted,student.name,student.degree );	
+					}
+					fclose(temp);
 					fclose(fp);
+					temp = fopen("temp.txt","r");
+					fp = fopen("myfile.txt" ,"w" );
+
+					while(!feof(temp)){
+											fscanf(temp,"%d %d %s %s\n",&student.id,&student.deleted,student.name,student.degree);
+						fprintf(fp,"%d %d %s %s\n",student.id,student.deleted,student.name,student.degree );
+					}
+					fclose(fp);
+					fclose(temp);
+
 					break ;
 			case 3 :
 					fp = fopen("myfile.txt" ,"r" );
